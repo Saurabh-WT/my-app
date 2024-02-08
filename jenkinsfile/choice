@@ -1,21 +1,42 @@
 pipeline {
-    agent demo
-{
-}
+    agent {
+        label "demo"
+    }
+    
     stages {
         stage("Clone") {
             steps {
-                git branch: "main", url: "https://github.com/Pundir26/my-app.git"
+                script {
+                        git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git"
+                    
+                    checkout scm
+                }
             }
         }
+        
         stage("Build") {
             steps {
-                sh "mvn package"
+                script {
+                    // Maven build step
+                    sh "mvn package"
+                }
             }
         }
+        
         stage("Deploy") {
             steps {
-                sh "scp target/app.war Saurabh@172.17.0.2:/home/Saurabh/apache-tomcat-9.0.85/webapps"
+                script {
+                    // SCP deploy step
+                    try {
+                        sh "scp target/app.war Saurabh@172.17.0.2:/home/Saurabh/apache-tomcat-9.0.85/webapps
+"
+                    } catch (Exception e) {
+                        // Print error message if SCP fails
+                        echo "SCP failed: ${e.message}"
+                        // Mark the stage as failed
+                        currentBuild.result = 'FAILURE'
+                    }
+                }
             }
         }
     }
