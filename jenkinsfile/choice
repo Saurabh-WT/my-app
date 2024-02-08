@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent demo
+{
+}
     stages {
         stage("Clone") {
             steps {
@@ -13,7 +15,7 @@ pipeline {
         }
         stage("Deploy") {
             steps {
-                sh "cp target/app.war /home/walkingtree/Downloads/apache-tomcat-9.0.85/webapps"
+                sh "scp target/app.war Saurabh@172.17.0.2:/home/Saurabh/apache-tomcat-9.0.85/webapps"
             }
         }
     }
