@@ -5,12 +5,11 @@ pipeline {
     
     stages {
         stage("Clone") {
-           
-                
-                        git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git"
-                
+            steps {
+                // Git clone step
+                git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git"
             }
-
+        }
         
         stage("Build") {
             steps {
