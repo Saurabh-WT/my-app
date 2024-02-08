@@ -26,8 +26,7 @@ pipeline {
                 script {
                     // SCP deploy step
                     try {
-                        sh "scp target/app.war Saurabh@172.17.0.2:/home/Saurabh/apache-tomcat-9.0.85/webapps
-"
+                        sh "scp target/app.war Saurabh@172.17.0.2:/home/Saurabh/apache-tomcat-9.0.85/webapps"
                     } catch (Exception e) {
                         // Print error message if SCP fails
                         echo "SCP failed: ${e.message}"
