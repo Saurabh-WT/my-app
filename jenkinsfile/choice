@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        label 'demm' 
-    }
-    parameters{
-          choice choices: ['172.17.0.3', '172.17.0.4'], description: 'kk', name: 'deployEnv'
-    }
+    agent any  
     stages {
         stage("clone")
         {
@@ -24,7 +19,8 @@ pipeline {
         {
             steps
             {
-                sh "scp target/app.war sp@${deployEnv}:/home/sp/apache-tomcat-9.0.83/webapps"
+                sh "cp target/app.war:/home/walkingtree/Downloads/apache-tomcat-9.0.85/webapps
+"
 
             }
 
