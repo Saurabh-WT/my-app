@@ -24,6 +24,7 @@ pipeline {
             steps {
                 script {
                     // SCP deploy step
+                    sh "whoami"
                     sh "scp -o StrictHostKeyChecking=no target/app.war Saurabh@172.17.0.2:/home/Saurabh/apache-tomcat-9.0.85/webapps"
                 }
             }
