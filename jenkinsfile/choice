@@ -22,7 +22,13 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('Sonarqube-10.0') { 
+                    sh 'cd  /home/walkingtree/Projects/my-app'
                     sh 'mvn sonar:sonar'
+
+  sh '-Dsonar.projectKey=demoapp-project \
+  -Dsonar.projectName='demoapp-project' \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.token=sqp_b35d13546b4461dfff5c0f3cae20d05e6c1faf09'
                 }
             }
         }
