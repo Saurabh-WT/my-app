@@ -1,5 +1,10 @@
+User
 pipeline {
     agent any
+    
+    environment {
+        PATH = "$PATH:/usr/share/maven/bin"
+    }
     
     stages {
         stage('Get Code') {
@@ -10,18 +15,16 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'mvn clean verify'
+                sh 'mvn clean package'
             }
         }
         
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('Sonarqube-10.0') {
-                    // Set SonarQube authentication token
-                    script {
-                        env.SONAR_TOKEN = credentials('sqp_480a1750158a8937fe8bd03640832896995013a1')
-                    }
-                    sh "mvn sonar:sonar \
-                        -Dsonar.projectKey=demoapp-project \
-                        -Dsonar.projectName='demoapp-project' \
-                        -Dsonar.host.url=http://localhost:900
+                withSonarQubeEnv('Sonarqube-10.0') { 
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
+    }
+}
