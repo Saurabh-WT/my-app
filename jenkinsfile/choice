@@ -1,33 +1,29 @@
-pipeline {
-    agent {
-        label "demo"
+pipeline{
+    agent any
+    environment {
+        PATH = "$PATH:/usr/share/maven/bin"
     }
-    
-    stages {
-        stage("Clone") {
-            steps {
-                // Git clone step
-                git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git"
+    stages{
+       stage('GetCode'){
+            steps{
+                git 'https://github.com/Saurabh-WT/my-app.git'
             }
-        }
-        
-        stage("Build") {
-            steps {
-                script {
-                    // Maven build step
-                    sh "mvn package"
-                }
+         }        
+       stage('Build'){
+            steps{
+                sh 'mvn clean package'
             }
+         }
+        stage('SonarQube analysis') {
+//    def scannerHome = tool 'SonarScanner 4.0';
+        steps{
+        withSonarQubeEnv('sonarqube-8.9') { 
+        // If you have configured more than one global server connection, you can specify its name
+//      sh "${scannerHome}/bin/sonar-scanner"
+        sh "mvn sonar:sonar"
+    }
         }
-        
-        stage("Deploy") {
-            steps {
-                script {
-                    // SCP deploy step
-                    sh "whoami"
-                    sh "cp target/app.war /home/Saurabh/apache-tomcat-9.0.85/webapps"
-                }
-            }
         }
+       
     }
 }
