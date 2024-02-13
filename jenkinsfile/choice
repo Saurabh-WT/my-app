@@ -21,7 +21,7 @@ pipeline {
         
       stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('Sonarqube-10.0') {
+                withSonarQubeEnv('sonarqubeScanner-5.0.1.3006') {
                     // Set SonarQube authentication token
                     script {
                         env.SONAR_TOKEN = credentials('sqp_480a1750158a8937fe8bd03640832896995013a1')
