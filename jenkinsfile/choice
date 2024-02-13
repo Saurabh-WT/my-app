@@ -1,30 +1,29 @@
-
-pipeline {
+pipeline{
     agent any
-    
-    stages {
-        stage('Get Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Saurabh-WT/my-app.git'
+    environment {
+        PATH = "$PATH:/usr/share/maven/bin"
+    }
+    stages{
+       stage('GetCode'){
+            steps{
+                git 'https://github.com/Saurabh-WT/my-app.git'
             }
-        }
-        
-        stage('Build') {
-            steps {
+         }        
+       stage('Build'){
+            steps{
                 sh 'mvn clean package'
             }
+         }
+        stage('SonarQube analysis') {
+//    def scannerHome = tool 'SonarScanner 4.0';
+        steps{
+        withSonarQubeEnv('Sonarqube-10.0') { 
+        // If you have configured more than one global server connection, you can specify its name
+//      sh "${scannerHome}/bin/sonar-scanner"
+        sh "mvn sonar:sonar"
+    }
         }
-        
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('Sonarqube-10.0') {
-                    // Set SonarQube authentication token
-                    script {
-                        env.SONAR_TOKEN = credentials('sqp_480a1750158a8937fe8bd03640832896995013a1')
-                    }
-                    sh 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN'
-                }
-            }
         }
+       
     }
 }
