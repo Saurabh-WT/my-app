@@ -19,10 +19,18 @@ pipeline {
             }
         }
         
-        stage('SonarQube Analysis') {
+      stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('Sonarqube-10.0') { 
-                    sh 'mvn sonar:sonar'
+                withSonarQubeEnv('Sonarqube-10.0') {
+                    // Set SonarQube authentication token
+                    script {
+                        env.SONAR_TOKEN = credentials('sqp_480a1750158a8937fe8bd03640832896995013a1')
+                    }
+                    sh 'mvn sonar:sonar \
+                        -Dsonar.projectKey=demoapp-project \
+                        -Dsonar.projectName="demoapp-project" \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=$SONAR_TOKEN'
                 }
             }
         }
