@@ -1,27 +1,26 @@
 pipeline {
-agent any
-  
-    
+    agent any
+
     stages {
         stage('Clone') {
             steps {
-                 git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git"
+                git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git"
             }
         }
-        
+
         stage('Build') {
             steps {
                 sh 'mvn clean package'
             }
         }
-        
+
         stage('Deploy to Apache Tomcat') {
+            agent {
+                label 'demo'
+            }
             steps {
- agent {
-        label 'demo'
-    }
                 script {
-                 sh "scp target/app.war /home/Saurabh/apache-tomcat-9.0.85/webapps"
+                    sh "scp target/app.war user@hostname:/home/Saurabh/apache-tomcat-9.0.85/webapps"
                 }
             }
         }
