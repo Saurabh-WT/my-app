@@ -1,1 +1,27 @@
-
+pipeline {
+    agent {
+        label 'demo'
+    }
+    
+    stages {
+        stage('Clone') {
+            steps {
+                 git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git"
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        
+        stage('Deploy to Apache Tomcat') {
+            steps {
+                script {
+                 sh "scp target/app.war /home/Saurabh/apache-tomcat-9.0.85/webapps"
+                }
+            }
+        }
+    }
+}
