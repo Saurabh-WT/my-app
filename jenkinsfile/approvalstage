@@ -1,0 +1,17 @@
+User
+stage ("Approval"){
+         when {
+                not {
+                    expression { 
+                        return "$branchName" =~ /(PR-.*)|develop|master/
+                    }
+                }
+            } 
+         steps {
+                script {
+                    timeout(time: 15, unit: "MINUTES") {
+                            input message: 'Do you want to approve the deployment?', ok: 'Yes'
+                        }
+                  }
+           }
+        }
