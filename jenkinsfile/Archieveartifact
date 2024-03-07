@@ -38,7 +38,7 @@ stages {
         }   
         stage('DEPLOY') {
             steps{
-                sh 'scp target/app.war saurabh@172.17.0.2:/home/saurabh/apache-tomcat-9.0.86/webapps'
+                sh 'scp -o StrictHostKeyChecking=no target/app.war saurabh@172.17.0.2:/home/saurabh/apache-tomcat-9.0.86/webapps'
             }  
         }
      }
