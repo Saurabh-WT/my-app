@@ -1,10 +1,6 @@
 pipeline {
-    agent
-{
-label 'demo'
-}
-
-    stages {
+agent any
+stages {
         stage('CLONE') {
             steps {
                 git branch: 'main', url: 'https://github.com/Saurabh-WT/my-app.git'
@@ -42,7 +38,7 @@ label 'demo'
         }   
         stage('DEPLOY') {
             steps{
-                sh 'cp target/app.war /home/saurabh/apache-tomcat-9.0.86/webapps'
+                sh 'scp target/app.war saurabh@172.17.0.2:/home/saurabh/apache-tomcat-9.0.86/webapps'
             }  
         }
      }
