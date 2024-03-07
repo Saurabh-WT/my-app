@@ -1,0 +1,28 @@
+pipeline
+{
+agent any
+stages
+{
+stage("clone/checkout")
+{
+steps
+    {
+git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git" 
+     }
+}
+stage("clean-package")
+     {
+steps
+{
+sh "mvn clean package"
+}
+}
+stage("docker build")
+{
+steps
+{
+sh "docker build -t pundir26/luffy ."
+}
+}
+}
+}
