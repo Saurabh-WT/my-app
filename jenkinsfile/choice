@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'BRANCH', choices: ['main', 'dev'], description: 'Branch to build')
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                checkout([$class: 'GitSCM',
+                          branches: [[name: "${params.BRANCH}"]],
+                          userRemoteConfigs: [[url: 'https://github.com/Saurabh-WT/my-app.git']]])
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'cp target/app.war /home/walkingtree/Downloads/apache-tomcat-9.0.85/webapps'
+                sh '/home/walkingtree/Downloads/apache-tomcat-9.0.85/bin/shutdown.sh'
+                sh '/home/walkingtree/Downloads/apache-tomcat-9.0.85/bin/startup.sh'
+            }
+        }
+    }
+}
