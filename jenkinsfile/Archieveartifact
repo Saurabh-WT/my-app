@@ -12,6 +12,7 @@ stages {
             steps {
                 sh 'mvn clean' 
                 sh 'mvn compile'
+                sh 'mvn package'
             }
         } 
 
@@ -40,7 +41,7 @@ stages {
         }   
         stage('DEPLOY') {
             steps{
-                sh 'cp /home/walkingtree/Projects/git/my-app/target/app.war  /home/walkingtree/Downloads/apache-tomcat-9.0.85/webapps/'
+                sh 'target/app.war  /home/walkingtree/Downloads/apache-tomcat-9.0.85/webapps/'
             }  
         }
 }
