@@ -9,7 +9,13 @@ pipeline {
         stage('Clone') {
             steps {
                 script {
-                    checkout([$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [url: 'https://github.com/Saurabh-WT/my-app.git'])
+                    checkout([$class: 'GitSCM',                           // Specifies that we're using the GitSCM class for configuring Git
+          branches: [[name: "${params.BRANCH}"]],      // Specifies the branch to checkout based on the parameter BRANCH
+          doGenerateSubmoduleConfigurations: false,   // Specifies whether to generate submodule configurations (false in this case)
+          extensions: [],                             // Specifies any additional GitSCM extensions (none in this case)
+          submoduleCfg: [],                           // Specifies submodule configurations (none in this case)
+          userRemoteConfigs: [url: 'https://github.com/Saurabh-WT/my-app.git']])  // Specifies the remote Git repository URL
+
                 }
             }
         }
