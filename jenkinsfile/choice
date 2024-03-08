@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        choice(name: 'BRANCH', choices: ['main', 'dev'], description: 'Branch to build')
+        choice(name: 'BRANCH', choices: ['main', 'dev', 'prod'], description: 'Branch to build')
     }
 
     stages {
