@@ -2,31 +2,30 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'BRANCH', defaultValue: 'master', description: 'Branch to build')
+        string(name: 'main', defaultValue: 'main', description: 'Branch to build')
     }
 
     stages {
         stage('Clone') {
             steps {
                 script {
-                    checkout([$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/yourusername/yourrepository.git']]])
+                    checkout([$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [url: 'https://github.com/Saurabh-WT/my-app.git'])
                 }
             }
         }
 
         stage('Build') {
             steps {
-                // Assuming you're using Maven for a Java project
+            
                 sh 'mvn clean package'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'cp target/your-project-name.war /path/to/apache-tomcat/webapps/'
-                // Restart Tomcat to apply changes
-                sh '/path/to/apache-tomcat/bin/shutdown.sh'
-                sh '/path/to/apache-tomcat/bin/startup.sh'
+                sh 'cp target/app.war /home/walkingtree/Downloads/apache-tomcat-9.0.85/webapps'
+                sh '/home/walkingtree/Downloads/apache-tomcat-9.0.85/bin/shutdown.sh'
+                sh '/home/walkingtree/Downloads/apache-tomcat-9.0.85/bin/startup.sh'
             }
         }
     }
