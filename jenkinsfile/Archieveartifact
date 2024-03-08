@@ -1,7 +1,9 @@
 pipeline {
 agent any
 stages {
-        stage('CLONE') {
+        stage('Parallel') {
+        parallel 
+{     stage ("clone") {
             steps {
                 git branch: 'main', url: 'https://github.com/Saurabh-WT/my-app.git'
             } 
@@ -41,5 +43,7 @@ stages {
                 sh 'scp -o StrictHostKeyChecking=no target/app.war saurabh@172.17.0.2:/home/saurabh/apache-tomcat-9.0.86/webapps'
             }  
         }
+}
+}
      }
 }
