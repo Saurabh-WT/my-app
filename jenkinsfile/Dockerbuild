@@ -1,28 +1,32 @@
-pipeline
-{
-agent any
-stages
-{
-stage("clone/checkout")
-{
-steps
-    {
-git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git" 
-     }
-}
-stage("clean-package")
-     {
-steps
-{
-sh "mvn clean package"
-}
-}
-stage("docker build")
-{
-steps
-{
-sh "docker build -t pundir26/luffy ."
-}
-}
-}
+pipeline {
+    agent any
+
+    stages {
+        stage("Clone/Checkout") {
+            steps {
+                git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git"
+            }
+        }
+
+        stage("Clean-Package") {
+            steps {
+                sh "mvn clean package"
+            }
+        }
+
+        stage("Docker Build") {
+            steps {
+                sh "docker build -t pundir260/luffy ."
+            }
+        }
+
+        stage("Docker Push") {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'pundir260', passwordVariable: 'dckr_pat_w0LcBC3tEeQ6az8cA3IiNkI8xLY')]) {
+                    sh "docker login -u "pundir260"$ -p $dckr_pat_w0LcBC3tEeQ6az8cA3IiNkI8xLY"
+                    sh "docker push pundir260/luffy"
+                }
+            }
+        }
+    }
 }
