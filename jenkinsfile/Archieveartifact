@@ -1,9 +1,7 @@
 pipeline {
 agent any
 stages {
-        stage('Parallel') {
-        parallel 
-{     stage ("clone") {
+   stage ("clone") {
             steps {
                 git branch: 'main', url: 'https://github.com/Saurabh-WT/my-app.git'
             } 
@@ -45,6 +43,4 @@ stages {
             }  
         }
 }
-}
-     }
 }
