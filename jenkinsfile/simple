@@ -21,7 +21,7 @@ stage('Build another Job')
 {
  steps
  {
- buid 'Dockerbuild'
+ build 'Dockerbuild'
  }
 }
 }
