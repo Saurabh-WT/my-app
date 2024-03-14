@@ -22,11 +22,11 @@ pipeline {
             steps {
                 withSonarQubeEnv('Sonarqube-10.0') { 
                     sh """
-                        mvn sonar:sonar \
-                          -Dsonar.projectKey=demoapp-project \
-                          -Dsonar.projectName='demoapp-project' \
-                          -Dsonar.host.url=http://localhost:9000 \
-                          -Dsonar.token=sqp_b35d13546b4461dfff5c0f3cae20d05e6c1faf09
+                        mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=newapp \
+  -Dsonar.projectName='newapp' \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.token=sqp_60c32ea0741a4ea454411218d0c36a36975ae32f
                     """
                 }
             }
