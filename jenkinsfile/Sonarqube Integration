@@ -22,7 +22,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('Sonarqube-10.0') { 
                     sh """
-                        mvn clean verify sonar:sonar \
+                        mvn sonar:sonar \
   -Dsonar.projectKey=newapp \
   -Dsonar.projectName='newapp' \
   -Dsonar.host.url=http://localhost:9000 \
