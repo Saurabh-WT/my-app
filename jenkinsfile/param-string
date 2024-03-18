@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to build')
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+    git branch: "main", url: "https://github.com/Saurabh-WT/my-app.git"
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+    }
+}
